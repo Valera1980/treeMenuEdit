@@ -1,5 +1,9 @@
 .menuItem {
     display: flex;
+    border: solid 0.3px #000;
+    border-radius: 5px;
+    align-items: center;
+    padding: 16px;
     &__form {
         display: flex;
     }
@@ -8,9 +12,10 @@
     }
     &__control-wrapper {
         padding: 8px;
+        display: flex;
+        align-items: center;
     }
     &__control {
-        width: 100%;
         &[type="text"] {
             height: 34px;
         }
