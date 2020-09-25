@@ -26,7 +26,7 @@ export class ModelTopMenuItem {
     items = []
   }: Partial<ITopMenuItem> = {}) {
     this.id = this.key = id;
-    this.name  = this.label = name;
+    this.name  = name;
     this.route = route;
     this.items = this.children = isArrayModelTopMenu(items) ? items : items.map(i =>  new ModelTopMenuItem(i));
   }

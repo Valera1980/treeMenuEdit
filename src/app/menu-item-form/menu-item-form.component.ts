@@ -19,7 +19,7 @@ interface IData {
 })
 export class MenuItemFormComponent implements OnInit {
   labelId = UUID.UUID();
-  viewMode: TViewMode = 'edit';
+  viewMode: TViewMode = 'view';
   form: FormGroup;
   private _node: ModelTopMenuItem;
   // @Input() control: FormControl;

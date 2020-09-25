@@ -33,8 +33,14 @@ export class MenuEditComponent implements OnInit {
 
   }
   editNode({ id, name, route, isShow }: { id: number, name: string, route: string, isShow: boolean }): void {
-    const node = this._menuHttp.findNode(id, this.menuData);
-    console.log(node);
+    const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
+    if (!node) {
+      throw new Error(`Node with id=${id} not found`);
+    }
+    node.name = name;
+    node.route = route;
+    this._cd.detectChanges();
+    // node.isShow = isShow;
   }
   deleteNode(): void {
 

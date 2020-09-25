@@ -14,4 +14,9 @@
         </p-tree>
 </div>
 <p>=============================================================================</p>
-<!-- <p>{{menuData | json}}</p> -->
+<div *ngFor="let item of menuData">
+    <p>name: {{item.name}} route: {{item.route}}</p>
+    <div *ngFor="let ch of item.children">
+       <p>{{ch.serialize() | json}}</p> 
+    </div>
+</div>

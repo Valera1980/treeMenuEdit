@@ -1,6 +1,6 @@
 <!-- <div class="menuItem" [formGroup]="control"> -->
 <div class="menuItem" [formGroup]="form">
-    <div class="menuItem__form">
+    <div class="menuItem__form" *ngIf="viewMode === 'edit'">
         <!--card in edit mode-->
         <div class="menuItem__control-wrapper">
             <input class="menuItem__control" formControlName="name" type="text" placeholder="name">
@@ -14,7 +14,17 @@
         </div>
     </div>
     <!--card in view mode-->
-    <div class="menuItem__card"> 
+    <div class="menuItem__card" *ngIf="viewMode === 'view'"> 
+        <div class="menuItem__control-wrapper">
+            <p class="menuItem__control" >{{name.value}}</p>
+        </div>
+        <div class="menuItem__control-wrapper">
+            <p class="menuItem__control" >{{route.value}}</p>
+        </div>
+        <div class="menuItem__control-wrapper">
+            <label for={{labelId}}>показать в меню</label>
+            <input class="menuItem__control" id={{labelId}} checked="{{isShow.value}}" disabled type="checkbox">
+        </div>
     </div>
     <i class="pi pi-pencil menuItem__action" *ngIf="viewMode==='view'" (click)="edit()"></i>
     <i class="pi pi-check menuItem__action" *ngIf="viewMode==='edit'" (click)="save()"></i>
