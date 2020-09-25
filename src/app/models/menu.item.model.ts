@@ -4,6 +4,7 @@ export interface ITopMenuItem {
   readonly name: string;
   readonly route: string;
   readonly items: ITopMenuItem[] | ModelTopMenuItem[];
+  readonly isShow: boolean;
   // members for primenG tree
   readonly key?: number;
   readonly label?: string;
@@ -15,7 +16,8 @@ export class ModelTopMenuItem {
   readonly name: string;
   readonly route: string;
   readonly items: ModelTopMenuItem[];
- // members for primenG tree
+  readonly isShow: boolean;
+  // members for primenG tree
   readonly key?: number;
   readonly label?: string;
   readonly children?: ModelTopMenuItem[];
@@ -23,12 +25,14 @@ export class ModelTopMenuItem {
     id = -1,
     name = '',
     route = '',
-    items = []
+    items = [],
+    isShow = true
   }: Partial<ITopMenuItem> = {}) {
     this.id = this.key = id;
-    this.name  = name;
+    this.name = name;
     this.route = route;
-    this.items = this.children = isArrayModelTopMenu(items) ? items : items.map(i =>  new ModelTopMenuItem(i));
+    this.isShow = isShow;
+    this.items = this.children = isArrayModelTopMenu(items) ? items : items.map(i => new ModelTopMenuItem(i));
   }
   clone(): ModelTopMenuItem {
     return new ModelTopMenuItem(this.serialize());
@@ -38,7 +42,8 @@ export class ModelTopMenuItem {
       id: this.id,
       name: this.name,
       route: this.route,
-      items: this.items
+      items: this.items,
+      isShow: this.isShow
     };
   }
   isNode(): boolean {

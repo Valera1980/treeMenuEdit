@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { TreeModule } from 'primeng/tree';
+import { MenubarModule } from 'primeng/menubar';
+
 import { MenuEditComponent } from './menu-edit/menu-edit.component';
 import { MenuItemFormComponent } from './menu-item-form/menu-item-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     TreeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MenubarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

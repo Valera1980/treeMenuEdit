@@ -24,7 +24,6 @@ export class MenuItemFormComponent implements OnInit {
   private _node: ModelTopMenuItem;
   @Input() set node(n: ModelTopMenuItem) {
     this._node = n;
-    console.log(this._node);
   }
   get node(): ModelTopMenuItem {
     return this._node;

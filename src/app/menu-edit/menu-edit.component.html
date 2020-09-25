@@ -1,26 +1,25 @@
 <div>
-        <p-tree [value]="menuData" (onNodeSelect)="selectNode($event)">
-            <!-- <ng-template let-node pTemplate="url">
+    <p-menubar [model]="items"></p-menubar>
+
+    <p-tree [value]="menuData" [selectionMode]="'single'" (onNodeSelect)="onNodeSelect($event)">
+        <!-- <ng-template let-node pTemplate="url">
         <a [href]="node.data">{{node.label}}</a>
     </ng-template>
     <ng-template let-node pTemplate="default">
         <b>{{node.label}}</b>
     </ng-template> -->
-            <ng-template let-node pTemplate="default" >
-                <app-menu-item-form 
-                    [isSelected]="selected && selected.id === node.id"
-                    [node]="node" 
-                    (eventEdit)="editNode($event)"
-                    (eventSelect)="selectNode($event)"
-                    >
-                </app-menu-item-form>
-            </ng-template>
-        </p-tree>
+        <ng-template let-node pTemplate="default">
+            <app-menu-item-form [isSelected]="selected && selected.id === node.id" [node]="node"
+                (eventEdit)="editNode($event)" (eventSelect)="selectNode($event)">
+            </app-menu-item-form>
+
+        </ng-template>
+    </p-tree>
 </div>
 <p>=============================================================================</p>
 <div *ngFor="let item of menuData">
     <p>name: {{item.name}} route: {{item.route}}</p>
     <div *ngFor="let ch of item.children">
-       <p>{{ch.serialize() | json}}</p> 
+        <p>{{ch.serialize() | json}}</p>
     </div>
 </div>
