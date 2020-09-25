@@ -4,6 +4,10 @@ export interface ITopMenuItem {
   readonly name: string;
   readonly route: string;
   readonly items: ITopMenuItem[] | ModelTopMenuItem[];
+  // members for primenG tree
+  readonly key?: number;
+  readonly label?: string;
+  readonly children?: ITopMenuItem[] | ModelTopMenuItem[];
 }
 
 export class ModelTopMenuItem {
@@ -11,16 +15,20 @@ export class ModelTopMenuItem {
   readonly name: string;
   readonly route: string;
   readonly items: ModelTopMenuItem[];
+ // members for primenG tree
+  readonly key?: number;
+  readonly label?: string;
+  readonly children?: ModelTopMenuItem[];
   constructor({
     id = -1,
     name = '',
     route = '',
     items = []
   }: Partial<ITopMenuItem> = {}) {
-    this.id = id;
-    this.name = name;
+    this.id = this.key = id;
+    this.name  = this.label = name;
     this.route = route;
-    this.items = isArrayModelTopMenu(items) ? items : items.map(i =>  new ModelTopMenuItem(i));
+    this.items = this.children = isArrayModelTopMenu(items) ? items : items.map(i =>  new ModelTopMenuItem(i));
   }
   clone(): ModelTopMenuItem {
     return new ModelTopMenuItem(this.serialize());

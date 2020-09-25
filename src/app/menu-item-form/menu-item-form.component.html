@@ -1,0 +1,21 @@
+<!-- <div class="menuItem" [formGroup]="control"> -->
+<div class="menuItem" [formGroup]="form">
+    <div class="menuItem__form">
+        <!--card in edit mode-->
+        <div class="menuItem__control-wrapper">
+            <input class="menuItem__control" formControlName="name" type="text" placeholder="name">
+        </div>
+        <div class="menuItem__control-wrapper">
+            <input class="menuItem__control" formControlName="route" type="text" placeholder="route">
+        </div>
+        <div class="menuItem__control-wrapper">
+            <label for={{labelId}}>показать в меню</label>
+            <input class="menuItem__control" id={{labelId}} formControlName="isShow" type="checkbox">
+        </div>
+    </div>
+    <!--card in view mode-->
+    <div class="menuItem__card"> 
+    </div>
+    <i class="pi pi-pencil menuItem__action" *ngIf="viewMode==='view'" (click)="edit()"></i>
+    <i class="pi pi-check menuItem__action" *ngIf="viewMode==='edit'" (click)="save()"></i>
+</div>

@@ -61,4 +61,24 @@ export class MenuHttpFakeService {
     }
     return arr;
   }
+  findNode(id: number, tree: ModelTopMenuItem[]): ModelTopMenuItem | undefined {
+    let findItem;
+    function _findLocaL(findId: number, arr: ModelTopMenuItem[]): void {
+      if (findItem) {
+        return;
+      }
+      for (const item of arr) {
+        if (item.id === findId) {
+          console.log('??????????????????? ', item);
+          findItem = item;
+          break;
+        } else {
+          _findLocaL(id, item.children);
+        }
+      }
+    }
+    _findLocaL(id, tree);
+    return findItem;
+
+  }
 }

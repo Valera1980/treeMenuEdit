@@ -1,1 +1,17 @@
-<p>menu-edit works!</p>
+<div>
+        <p-tree [value]="menuData">
+            <!-- <ng-template let-node pTemplate="url">
+        <a [href]="node.data">{{node.label}}</a>
+    </ng-template>
+    <ng-template let-node pTemplate="default">
+        <b>{{node.label}}</b>
+    </ng-template> -->
+            <ng-template let-node pTemplate="default">
+                <app-menu-item-form [node]="node" (eventEdit)="editNode($event)">
+
+                </app-menu-item-form>
+            </ng-template>
+        </p-tree>
+</div>
+<p>=============================================================================</p>
+<!-- <p>{{menuData | json}}</p> -->

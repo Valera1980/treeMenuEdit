@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 
 import { TreeModule } from 'primeng/tree';
 import { MenuEditComponent } from './menu-edit/menu-edit.component';
+import { MenuItemFormComponent } from './menu-item-form/menu-item-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuEditComponent
+    MenuEditComponent,
+    MenuItemFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    TreeModule
+    TreeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

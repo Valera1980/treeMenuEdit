@@ -1,0 +1,20 @@
+.menuItem {
+    display: flex;
+    &__form {
+        display: flex;
+    }
+    &__control-wrapper {
+        padding: 8px;
+    }
+    &__control {
+        width: 100%;
+        &[type="text"] {
+            height: 34px;
+        }
+    }
+    &__action {
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
