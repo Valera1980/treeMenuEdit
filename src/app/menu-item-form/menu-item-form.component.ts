@@ -10,6 +10,7 @@ interface IData {
   route: string;
   isShow: boolean;
 }
+type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 @Component({
   selector: 'app-menu-item-form',
@@ -21,7 +22,7 @@ export class MenuItemFormComponent implements OnInit {
   labelId = UUID.UUID();
   viewMode: TViewMode = 'view';
   form: FormGroup;
-  private _node: ModelTopMenuItem;
+  private _node: Writeable<ModelTopMenuItem>;
   @Input() set node(n: ModelTopMenuItem) {
     this._node = n;
   }
@@ -53,6 +54,7 @@ export class MenuItemFormComponent implements OnInit {
   }
   edit(): void {
     this.viewMode = 'edit';
+    this._node.viewMode = 'edit';
   }
   select(): void {
     this.eventSelect.emit({ viewMode: this.viewMode, node: this.node.clone()});

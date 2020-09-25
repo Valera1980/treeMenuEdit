@@ -15,8 +15,8 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 export class MenuEditComponent implements OnInit {
 
   menuData: ModelTopMenuItem[];
-  selected: ModelTopMenuItem;
-  selectedParent: ModelTopMenuItem;
+  selected: any;
+  selectedParent: any;
   selectedViewMode;
   items: MenuItem[];
 
@@ -37,10 +37,16 @@ export class MenuEditComponent implements OnInit {
   }
   addMenuItem(): void {
     const newItem = new ModelTopMenuItem();
-    this.selected.items.push(newItem);
-    // this.selected.children.push(newItem);
+    // this.selected.items.push(newItem);
+    this.selected.children.push(newItem);
     console.log(this.selected);
-    this._cd.detectChanges();
+    this.selected.expanded = true;
+    // setTimeout(() => {
+    //   this.selected = newItem;
+    //   console.log(this.selected);
+    //   this._cd.detectChanges();
+    // }, 1000);
+
   }
   editNode({ id, name, route, isShow }: { id: number, name: string, route: string, isShow: boolean }): void {
     const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
@@ -60,11 +66,12 @@ export class MenuEditComponent implements OnInit {
     if (this.selectedViewMode === 'edit' && node.id !== this.selected.id) {
       return;
     }
-    this.selected = node;
+   
     this.selectedViewMode = viewMode;
     this._cd.detectChanges();
   }
   onNodeSelect({ node, originalEvent }): void {
+    this.selected = node;
     this.selectedParent = node.parent;
     this.items = this.getMenuItems();
     console.log(node);
@@ -77,7 +84,7 @@ export class MenuEditComponent implements OnInit {
         // if no parent and if there is at least one selected item
         disabled: this.selectedParent !== undefined || this.selected === undefined,
         command: (e) => {
-         this.addMenuItem();
+          this.addMenuItem();
         }
       },
       {
