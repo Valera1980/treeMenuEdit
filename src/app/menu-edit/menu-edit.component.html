@@ -1,14 +1,18 @@
 <div>
-        <p-tree [value]="menuData">
+        <p-tree [value]="menuData" (onNodeSelect)="selectNode($event)">
             <!-- <ng-template let-node pTemplate="url">
         <a [href]="node.data">{{node.label}}</a>
     </ng-template>
     <ng-template let-node pTemplate="default">
         <b>{{node.label}}</b>
     </ng-template> -->
-            <ng-template let-node pTemplate="default">
-                <app-menu-item-form [node]="node" (eventEdit)="editNode($event)">
-
+            <ng-template let-node pTemplate="default" >
+                <app-menu-item-form 
+                    [isSelected]="selected && selected.id === node.id"
+                    [node]="node" 
+                    (eventEdit)="editNode($event)"
+                    (eventSelect)="selectNode($event)"
+                    >
                 </app-menu-item-form>
             </ng-template>
         </p-tree>

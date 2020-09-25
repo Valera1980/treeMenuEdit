@@ -1,8 +1,6 @@
 import { ModelTopMenuItem } from './../models/menu.item.model';
 import { MenuHttpFakeService } from './../services/menu-http-fake/menu-http-fake.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -16,7 +14,8 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 export class MenuEditComponent implements OnInit {
 
   menuData: ModelTopMenuItem[];
-
+  selected: ModelTopMenuItem;
+  selectedViewMode;
   constructor(
     private _menuHttp: MenuHttpFakeService,
     private _cd: ChangeDetectorRef
@@ -44,5 +43,14 @@ export class MenuEditComponent implements OnInit {
   }
   deleteNode(): void {
 
+  }
+  selectNode({ node, viewMode }): void {
+    // prevent edit more than one node
+    if (this.selectedViewMode === 'edit' && node.id !== this.selected.id) {
+      return;
+    }
+    this.selected = node;
+    this.selectedViewMode = viewMode;
+    this._cd.detectChanges();
   }
 }

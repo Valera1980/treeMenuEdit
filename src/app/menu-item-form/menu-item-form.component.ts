@@ -22,7 +22,6 @@ export class MenuItemFormComponent implements OnInit {
   viewMode: TViewMode = 'view';
   form: FormGroup;
   private _node: ModelTopMenuItem;
-  // @Input() control: FormControl;
   @Input() set node(n: ModelTopMenuItem) {
     this._node = n;
     console.log(this._node);
@@ -30,7 +29,9 @@ export class MenuItemFormComponent implements OnInit {
   get node(): ModelTopMenuItem {
     return this._node;
   }
+  @Input() isSelected = false;
   @Output() eventEdit = new EventEmitter();
+  @Output() eventSelect = new EventEmitter();
   constructor(
     private _fb: FormBuilder
   ) { }
@@ -53,6 +54,9 @@ export class MenuItemFormComponent implements OnInit {
   }
   edit(): void {
     this.viewMode = 'edit';
+  }
+  select(): void {
+    this.eventSelect.emit({ viewMode: this.viewMode, node: this.node.clone()});
   }
   get name(): AbstractControl {
     return this.form.get('name');

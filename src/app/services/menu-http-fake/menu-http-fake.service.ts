@@ -28,7 +28,7 @@ export class MenuHttpFakeService {
         items: [
           new ModelTopMenuItem({ id: 6, name: 'item six', items: [], route: 'six' }),
           new ModelTopMenuItem({ id: 7, name: 'item seven', items: [], route: 'seven' }),
-          new ModelTopMenuItem({ id: 7, name: 'item eight', items: [], route: 'eight' }),
+          new ModelTopMenuItem({ id: 8, name: 'item eight', items: [], route: 'eight' }),
         ]
       }),
     ];

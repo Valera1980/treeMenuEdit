@@ -1,5 +1,6 @@
 <!-- <div class="menuItem" [formGroup]="control"> -->
-<div class="menuItem" [formGroup]="form">
+<div class="menuItem" [formGroup]="form" (click)="select()" [ngClass]="{'menuItem__selected-node': isSelected === true}">
+    isSelected >>>> {{isSelected}}
     <div class="menuItem__form" *ngIf="viewMode === 'edit'">
         <!--card in edit mode-->
         <div class="menuItem__control-wrapper">
@@ -14,12 +15,12 @@
         </div>
     </div>
     <!--card in view mode-->
-    <div class="menuItem__card" *ngIf="viewMode === 'view'"> 
+    <div class="menuItem__card" *ngIf="viewMode === 'view'">
         <div class="menuItem__control-wrapper">
-            <p class="menuItem__control" >{{name.value}}</p>
+            <p class="menuItem__control">{{name.value}}</p>
         </div>
         <div class="menuItem__control-wrapper">
-            <p class="menuItem__control" >{{route.value}}</p>
+            <p class="menuItem__control">{{route.value}}</p>
         </div>
         <div class="menuItem__control-wrapper">
             <label for={{labelId}}>показать</label>
