@@ -2,14 +2,13 @@
     <p-menubar [model]="items"></p-menubar>
     {{selected?.viewMode}}
 
-    <p-tree [value]="menuData" [selectionMode]="'single'" (onNodeSelect)="onNodeSelect($event)">
-        <!-- <ng-template let-node pTemplate="url">
-        <a [href]="node.data">{{node.label}}</a>
-    </ng-template>
-    <ng-template let-node pTemplate="default">
-        <b>{{node.label}}</b>
-    </ng-template> -->
-        <ng-template let-node pTemplate="default">
+    <p-tree [value]="menuData" 
+            [selectionMode]="'single'" 
+            (onNodeSelect)="onNodeSelect($event)"
+            [filter]="true" 
+           
+            >  
+         <ng-template let-node pTemplate="default">
             <app-menu-item-form 
                 [allowEdit]="selected && selected.viewMode === 'view'"
                 [isSelected]="selected && selected.id === node.id" [node]="node"

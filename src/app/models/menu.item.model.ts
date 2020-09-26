@@ -8,7 +8,7 @@ export interface ITopMenuItem {
   readonly viewMode: 'edit' | 'view';
   readonly isNew: boolean;
   // members for primenG tree
-  readonly key?: number |string;
+  readonly key?: number | string;
   readonly label?: string;
   readonly children?: ITopMenuItem[] | ModelTopMenuItem[];
 }
@@ -35,7 +35,7 @@ export class ModelTopMenuItem implements ITopMenuItem {
     isNew = false
   }: Partial<ITopMenuItem> = {}) {
     this.id = this.key = id;
-    this.name = name;
+    this.name = this.label = name;
     this.route = route;
     this.isShow = isShow;
     this.viewMode = viewMode;
@@ -53,7 +53,9 @@ export class ModelTopMenuItem implements ITopMenuItem {
       items: this.items,
       isShow: this.isShow,
       viewMode: this.viewMode,
-      isNew: this.isNew
+      isNew: this.isNew,
+      key: this.key,
+      label: this.label
     };
   }
   isNode(): boolean {

@@ -1,5 +1,5 @@
 import { ModelTopMenuItem } from './../models/menu.item.model';
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
 
@@ -37,7 +37,8 @@ export class MenuItemFormComponent implements OnInit {
   @Input() allowEdit = true;
   @Output() eventEditSubmit = new EventEmitter();
   constructor(
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +57,7 @@ export class MenuItemFormComponent implements OnInit {
       isShow: this.isShow.value
     });
     this.form.markAsPristine();
+    this._cd.detectChanges();
   }
   edit(): void {
     this.viewMode = 'edit';

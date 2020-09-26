@@ -43,21 +43,31 @@ export class MenuEditComponent implements OnInit {
     this.selected.expanded = true;
     this.selected = newItem;
   }
+  addNode(): void {
+    const newItem = new ModelTopMenuItem({ id: UUID.UUID(), isNew: true, viewMode: 'edit' });
+    this.menuData.push(newItem);
+    this.selected = newItem;
+    this.selected.expanded = true;
+  }
   editNode({ id, name, route, isShow }: { id: number, name: string, route: string, isShow: boolean }): void {
-    const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
-    if (!node) {
+    // const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
+    if (!this.selected) {
       throw new Error(`Node with id=${id} not found`);
     }
-    node.name = name;
-    node.route = route;
+    this.selected.name = name;
+    this.selected.route = route;
+    this.selected.isShow = isShow;
     this._cd.detectChanges();
     // node.isShow = isShow;
   }
   deleteNode(): void {
+    if (!this.selected.isNew) {
+      return;
+    }
     this._confirmationService.confirm({
-      message: 'Are you sure that you want to perform this action?',
+      message: this.getRemoveMessage(this.selected),
       accept: () => {
-        // Actual logic to perform a confirmation
+        
       }
     });
   }
@@ -74,21 +84,34 @@ export class MenuEditComponent implements OnInit {
   getMenuItems(): MenuItem[] {
     return [
       {
-        label: 'New',
+        label: 'Новый узел',
         icon: 'pi pi-fw pi-plus',
-        // if no parent and if there is at least one selected item
+        command: (e) => {
+          this.addNode();
+        }
+      },
+      {
+        label: 'Новый элемент',
+        icon: 'pi pi-fw pi-plus',
         disabled: this.selectedParent !== undefined || this.selected === undefined,
         command: (e) => {
           this.addMenuItem();
         }
       },
       {
-        label: 'Delete',
+        label: 'Удалить',
         icon: 'pi pi-fw pi-trash',
+        disabled: this.selected === undefined || !this.selected.isNew,
         command: (e) => {
           this.deleteNode();
         }
       }
     ];
+  }
+  getRemoveMessage(node: ModelTopMenuItem): string {
+    if (node.children.length) {
+      return `Удалить  узел ${node.name} и ${node.children.length} дочерних элемента ?`;
+    }
+    return `Удалить  узел ${node.name} ?`;
   }
 }

@@ -13,22 +13,22 @@ export class MenuHttpFakeService {
     const menu = [
       new ModelTopMenuItem({
         id: 1,
-        name: 'Parent one',
+        name: 'Группа 1',
         route: '/parent-one',
         items: [
-          new ModelTopMenuItem({ id: 2, name: 'item one', items: [], route: '/one' }),
-          new ModelTopMenuItem({ id: 3, name: 'item two', items: [], route: '/two' }),
-          new ModelTopMenuItem({ id: 4, name: 'item three', items: [], route: '/three' }),
+          new ModelTopMenuItem({ id: 2, name: 'контакты', items: [], route: '/contacts' }),
+          new ModelTopMenuItem({ id: 3, name: 'о нас', items: [], route: '/about-us' }),
+          new ModelTopMenuItem({ id: 4, name: 'ход строительства', items: [], route: '/calculator' }),
         ]
       }),
       new ModelTopMenuItem({
         id: 5,
-        name: 'Parent one',
-        route: '/parent-one',
+        name: 'Группа два',
+        route: '/parent-two',
         items: [
-          new ModelTopMenuItem({ id: 6, name: 'item six', items: [], route: 'six' }),
-          new ModelTopMenuItem({ id: 7, name: 'item seven', items: [], route: 'seven' }),
-          new ModelTopMenuItem({ id: 8, name: 'item eight', items: [], route: 'eight' }),
+          new ModelTopMenuItem({ id: 6, name: 'галерея', items: [], route: 'gallery' }),
+          new ModelTopMenuItem({ id: 7, name: 'подобрать квартиру', items: [], route: 'flat' }),
+          new ModelTopMenuItem({ id: 8, name: 'документация', items: [], route: 'documents' }),
         ]
       }),
     ];
@@ -62,14 +62,13 @@ export class MenuHttpFakeService {
     return arr;
   }
   findNode(id: number, tree: ModelTopMenuItem[]): ModelTopMenuItem | undefined {
-    let findItem;
+    let findItem: ModelTopMenuItem | undefined;
     function _findLocaL(findId: number, arr: ModelTopMenuItem[]): void {
       if (findItem) {
         return;
       }
       for (const item of arr) {
         if (item.id === findId) {
-          console.log('??????????????????? ', item);
           findItem = item;
           break;
         } else {
