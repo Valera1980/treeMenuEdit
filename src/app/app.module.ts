@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TreeDragDropService } from 'primeng/api';
 
 import { MenuEditComponent } from './menu-edit/menu-edit.component';
 import { MenuItemFormComponent } from './menu-item-form/menu-item-form.component';
@@ -34,7 +35,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CheckboxModule
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    TreeDragDropService
   ],
   bootstrap: [AppComponent]
 })

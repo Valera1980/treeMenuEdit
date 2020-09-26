@@ -5,7 +5,8 @@
     <p-tree [value]="menuData" 
             [selectionMode]="'single'" 
             (onNodeSelect)="onNodeSelect($event)"
-            [filter]="true" 
+            [filter]="true"
+            [draggableNodes]="true" [droppableNodes]="true" draggableScope="self" droppableScope="self"
            
             >  
          <ng-template let-node pTemplate="default">
