@@ -1,9 +1,18 @@
 .menuItem {
-    display: flex;
     border: solid 0.3px #000;
     border-radius: 5px;
-    align-items: center;
     padding: 16px;
+    &__header {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    &__header-item {
+        margin-left: 10px;
+    }
+    &__body {
+        display: flex;
+        align-items: center;
+    }
     &__form {
         display: flex;
     }

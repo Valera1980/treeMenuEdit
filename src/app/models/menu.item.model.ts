@@ -1,6 +1,6 @@
 
 export interface ITopMenuItem {
-  readonly id: number;
+  readonly id: number | string;
   readonly name: string;
   readonly route: string;
   readonly items: ITopMenuItem[] | ModelTopMenuItem[];
@@ -8,13 +8,13 @@ export interface ITopMenuItem {
   readonly viewMode: 'edit' | 'view';
   readonly isNew: boolean;
   // members for primenG tree
-  readonly key?: number;
+  readonly key?: number |string;
   readonly label?: string;
   readonly children?: ITopMenuItem[] | ModelTopMenuItem[];
 }
 
-export class ModelTopMenuItem {
-  readonly id: number;
+export class ModelTopMenuItem implements ITopMenuItem {
+  readonly id: number | string;
   readonly name: string;
   readonly route: string;
   readonly items: ModelTopMenuItem[];
@@ -22,7 +22,7 @@ export class ModelTopMenuItem {
   readonly viewMode: 'edit' | 'view';
   readonly isNew: boolean;
   // members for primenG tree
-  readonly key?: number;
+  readonly key?: number | string;
   readonly label?: string;
   readonly children?: ModelTopMenuItem[];
   constructor({

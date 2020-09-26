@@ -1,7 +1,8 @@
+import { UUID } from 'angular2-uuid';
 import { ModelTopMenuItem } from './../models/menu.item.model';
 import { MenuHttpFakeService } from './../services/menu-http-fake/menu-http-fake.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, TreeNode } from 'primeng/api';
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -17,12 +18,13 @@ export class MenuEditComponent implements OnInit {
   menuData: ModelTopMenuItem[];
   selected: any;
   selectedParent: any;
-  selectedViewMode;
+  // selectedViewMode;
   items: MenuItem[];
 
   constructor(
     private _menuHttp: MenuHttpFakeService,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -36,17 +38,10 @@ export class MenuEditComponent implements OnInit {
       });
   }
   addMenuItem(): void {
-    const newItem = new ModelTopMenuItem();
-    // this.selected.items.push(newItem);
+    const newItem = new ModelTopMenuItem({ id: UUID.UUID(), isNew: true, viewMode: 'edit' });
     this.selected.children.push(newItem);
-    console.log(this.selected);
     this.selected.expanded = true;
-    // setTimeout(() => {
-    //   this.selected = newItem;
-    //   console.log(this.selected);
-    //   this._cd.detectChanges();
-    // }, 1000);
-
+    this.selected = newItem;
   }
   editNode({ id, name, route, isShow }: { id: number, name: string, route: string, isShow: boolean }): void {
     const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
@@ -59,20 +54,20 @@ export class MenuEditComponent implements OnInit {
     // node.isShow = isShow;
   }
   deleteNode(): void {
-
-  }
-  selectNode({ node, viewMode }): void {
-    // prevent edit more than one node
-    if (this.selectedViewMode === 'edit' && node.id !== this.selected.id) {
-      return;
-    }
-   
-    this.selectedViewMode = viewMode;
-    this._cd.detectChanges();
+    this._confirmationService.confirm({
+      message: 'Are you sure that you want to perform this action?',
+      accept: () => {
+        // Actual logic to perform a confirmation
+      }
+    });
   }
   onNodeSelect({ node, originalEvent }): void {
+    if (this.selected?.viewMode === 'edit') {
+      return;
+    }
     this.selected = node;
     this.selectedParent = node.parent;
+    // this.selectedViewMode = node.viewMode;
     this.items = this.getMenuItems();
     console.log(node);
   }
@@ -91,7 +86,7 @@ export class MenuEditComponent implements OnInit {
         label: 'Delete',
         icon: 'pi pi-fw pi-trash',
         command: (e) => {
-          console.log(this.selected);
+          this.deleteNode();
         }
       }
     ];

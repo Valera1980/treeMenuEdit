@@ -1,32 +1,62 @@
 <!-- <div class="menuItem" [formGroup]="control"> -->
-<div class="menuItem" [formGroup]="form" (click)="select()" [ngClass]="{'menuItem__selected-node': isSelected === true}">
-    isSelected >>>> {{isSelected}}
-    <div class="menuItem__form" *ngIf="viewMode === 'edit'">
-        <!--card in edit mode-->
-        <div class="menuItem__control-wrapper">
-            <input class="menuItem__control" formControlName="name" type="text" placeholder="name">
-        </div>
-        <div class="menuItem__control-wrapper">
-            <input class="menuItem__control" formControlName="route" type="text" placeholder="route">
-        </div>
-        <div class="menuItem__control-wrapper">
-            <label for={{labelId}}>показать</label>
-            <input class="menuItem__control" id={{labelId}} formControlName="isShow" type="checkbox">
-        </div>
+<div class="menuItem" [formGroup]="form"
+    [ngClass]="{'menuItem__selected-node': isSelected === true}">
+    <div class="menuItem__header">
+        <span *ngIf="form.dirty" class="menuItem__header-item">*</span>
+        <span class="menuItem__header-item">{{node.id}}</span>
+        <span class="menuItem__header-item">{{node.viewMode}}</span>
+        <span class="menuItem__header-item">{{node.isNew ?'Новий' : '' }}</span>
     </div>
-    <!--card in view mode-->
-    <div class="menuItem__card" *ngIf="viewMode === 'view'">
-        <div class="menuItem__control-wrapper">
-            <p class="menuItem__control">{{name.value}}</p>
+    <div class="menuItem__body">
+
+
+        <div class="menuItem__form" *ngIf="node.viewMode === 'edit'">
+            <!--card in edit mode-->
+            <div class="menuItem__control-wrapper">
+                <input class="menuItem__control" formControlName="name" type="text" placeholder="name">
+            </div>
+            <div class="menuItem__control-wrapper">
+                <input class="menuItem__control" formControlName="route" type="text" placeholder="route">
+            </div>
+            <div class="menuItem__control-wrapper">
+                <label for={{labelId}}>показать</label>
+                <input class="menuItem__control" id={{labelId}} formControlName="isShow" type="checkbox">
+            </div>
         </div>
-        <div class="menuItem__control-wrapper">
-            <p class="menuItem__control">{{route.value}}</p>
+        <!--card in view mode-->
+        <div class="menuItem__card" *ngIf="node.viewMode === 'view'">
+            <div class="menuItem__control-wrapper">
+                <p class="menuItem__control">{{name.value}}</p>
+            </div>
+            <div class="menuItem__control-wrapper">
+                <p class="menuItem__control">{{route.value}}</p>
+            </div>
+            <div class="menuItem__control-wrapper">
+                <label for={{labelId}}>показать</label>
+                <input class="menuItem__control" id={{labelId}} checked="{{isShow.value}}" disabled type="checkbox">
+            </div>
         </div>
-        <div class="menuItem__control-wrapper">
-            <label for={{labelId}}>показать</label>
-            <input class="menuItem__control" id={{labelId}} checked="{{isShow.value}}" disabled type="checkbox">
-        </div>
+
+        <button 
+            [disabled]="!allowEdit"
+            *ngIf="node.viewMode==='view'"
+            pButton 
+            pRipple 
+            type="button" 
+            icon="pi pi-pencil" 
+            class="p-button-rounded p-button-outlined"
+            (click)="edit()"
+            >
+        </button>
+        <button 
+           *ngIf="node.viewMode==='edit'"
+            pButton 
+            pRipple 
+            type="button" 
+            icon="pi pi-check" 
+            class="p-button-rounded p-button-outlined"
+            (click)="save()"
+            >
+         </button>
     </div>
-    <i class="pi pi-pencil menuItem__action" *ngIf="viewMode==='view'" (click)="edit()"></i>
-    <i class="pi pi-check menuItem__action" *ngIf="viewMode==='edit'" (click)="save()"></i>
 </div>

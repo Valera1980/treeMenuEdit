@@ -1,5 +1,6 @@
 <div>
     <p-menubar [model]="items"></p-menubar>
+    {{selected?.viewMode}}
 
     <p-tree [value]="menuData" [selectionMode]="'single'" (onNodeSelect)="onNodeSelect($event)">
         <!-- <ng-template let-node pTemplate="url">
@@ -9,8 +10,10 @@
         <b>{{node.label}}</b>
     </ng-template> -->
         <ng-template let-node pTemplate="default">
-            <app-menu-item-form [isSelected]="selected && selected.id === node.id" [node]="node"
-                (eventEdit)="editNode($event)" (eventSelect)="selectNode($event)">
+            <app-menu-item-form 
+                [allowEdit]="selected && selected.viewMode === 'view'"
+                [isSelected]="selected && selected.id === node.id" [node]="node"
+                (eventEditSubmit)="editNode($event)">
             </app-menu-item-form>
 
         </ng-template>
@@ -23,3 +26,4 @@
         <p>{{ch.serialize() | json}}</p>
     </div>
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

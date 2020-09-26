@@ -19,19 +19,23 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuItemFormComponent implements OnInit {
-  labelId = UUID.UUID();
-  viewMode: TViewMode = 'view';
-  form: FormGroup;
   private _node: Writeable<ModelTopMenuItem>;
+  /**
+   * id for checkbox label.
+   */
+  labelId = UUID.UUID();
+  viewMode: TViewMode;
+  form: FormGroup;
   @Input() set node(n: ModelTopMenuItem) {
     this._node = n;
+    this.viewMode = n.viewMode;
   }
   get node(): ModelTopMenuItem {
     return this._node;
   }
   @Input() isSelected = false;
-  @Output() eventEdit = new EventEmitter();
-  @Output() eventSelect = new EventEmitter();
+  @Input() allowEdit = true;
+  @Output() eventEditSubmit = new EventEmitter();
   constructor(
     private _fb: FormBuilder
   ) { }
@@ -44,20 +48,18 @@ export class MenuItemFormComponent implements OnInit {
     });
   }
   save(): void {
-    this.viewMode = 'view';
-    this.eventEdit.emit({
+    this._node.viewMode = 'view';
+    this.eventEditSubmit.emit({
       id: this.node.id,
       name: this.name.value,
       route: this.route.value,
       isShow: this.isShow.value
     });
+    this.form.markAsPristine();
   }
   edit(): void {
     this.viewMode = 'edit';
     this._node.viewMode = 'edit';
-  }
-  select(): void {
-    this.eventSelect.emit({ viewMode: this.viewMode, node: this.node.clone()});
   }
   get name(): AbstractControl {
     return this.form.get('name');
