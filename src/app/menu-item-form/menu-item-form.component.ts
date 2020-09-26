@@ -35,6 +35,11 @@ export class MenuItemFormComponent implements OnInit {
   }
   @Input() isSelected = false;
   @Input() allowEdit = true;
+
+  preEditName = '';
+  preEditRoute = '';
+  preEditIsShow: boolean;
+
   @Output() eventEditSubmit = new EventEmitter();
   constructor(
     private _fb: FormBuilder,
@@ -60,8 +65,23 @@ export class MenuItemFormComponent implements OnInit {
     this._cd.detectChanges();
   }
   edit(): void {
-    this.viewMode = 'edit';
+    this.preEditName = this.name.value;
+    this.preEditRoute = this.route.value;
+    this.preEditIsShow = this.isShow.value;
     this._node.viewMode = 'edit';
+  }
+  cancel(): void {
+    this._node.viewMode = 'view';
+    this.form.patchValue({
+      name: this.preEditName,
+      route: this.preEditRoute,
+      isShow: this.preEditIsShow,
+    });
+    this.preEditName = '';
+    this.preEditRoute = '';
+    this.preEditIsShow = false;
+    this.form.markAsPristine();
+    this._cd.detectChanges();
   }
   get name(): AbstractControl {
     return this.form.get('name');
