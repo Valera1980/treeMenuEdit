@@ -1,5 +1,4 @@
-<!-- <div class="menuItem" [formGroup]="control"> -->
-<div class="menuItem" [formGroup]="form"
+<div @itemAnimation (@itemAnimation.done)="done($event)" class="menuItem" [formGroup]="form"
     [ngClass]="{'menuItem__selected-node': isSelected === true}">
     <div class="menuItem__header">
         <span *ngIf="form.dirty" class="menuItem__header-item">*</span>

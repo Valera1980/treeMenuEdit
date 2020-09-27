@@ -25,6 +25,7 @@ export class ModelTopMenuItem implements ITopMenuItem {
   readonly key?: number | string;
   readonly label?: string;
   readonly children?: ModelTopMenuItem[];
+  droppable = false;
   constructor({
     id = -1,
     name = '',
@@ -41,6 +42,7 @@ export class ModelTopMenuItem implements ITopMenuItem {
     this.viewMode = viewMode;
     this.isNew = isNew;
     this.items = this.children = isArrayModelTopMenu(items) ? items : items.map(i => new ModelTopMenuItem(i));
+    this.droppable = this.children.length === 0;
   }
   clone(): ModelTopMenuItem {
     return new ModelTopMenuItem(this.serialize());

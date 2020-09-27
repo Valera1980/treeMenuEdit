@@ -1,7 +1,8 @@
 import { ModelTopMenuItem } from './../models/menu.item.model';
-import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, HostBinding } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { UUID } from 'angular2-uuid';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 
 type TViewMode = 'view' | 'edit';
@@ -16,7 +17,18 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
   selector: 'app-menu-item-form',
   templateUrl: './menu-item-form.component.html',
   styleUrls: ['./menu-item-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('itemAnimation', [
+      transition('void => *', [
+        animate(1000, keyframes([
+          style({ opacity: 0, transform: 'translateY(-3px)', offset: 0 }),
+          style({ opacity: 0.3, transform: 'translateY(3px)', offset: 0.3 }),
+          style({ opacity: 0.8, transform: 'translateY(0)', offset: 0.8 })
+        ]))
+      ])
+    ])
+  ],
 })
 export class MenuItemFormComponent implements OnInit {
   private _node: Writeable<ModelTopMenuItem>;
@@ -39,7 +51,6 @@ export class MenuItemFormComponent implements OnInit {
   preEditName = '';
   preEditRoute = '';
   preEditIsShow: boolean;
-
   @Output() eventEditSubmit = new EventEmitter();
   constructor(
     private _fb: FormBuilder,
@@ -92,5 +103,7 @@ export class MenuItemFormComponent implements OnInit {
   get isShow(): AbstractControl {
     return this.form.get('isShow');
   }
-
+  done(e): void {
+      console.log(e);
+  }
 }

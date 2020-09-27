@@ -3,6 +3,7 @@ import { ModelTopMenuItem } from './../models/menu.item.model';
 import { MenuHttpFakeService } from './../services/menu-http-fake/menu-http-fake.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ConfirmationService, MenuItem, TreeNode } from 'primeng/api';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -11,7 +12,14 @@ type Writeable<T> = { -readonly [P in keyof T]: T[P] };
   selector: 'app-menu-edit',
   templateUrl: './menu-edit.component.html',
   styleUrls: ['./menu-edit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('nodeAnimation', [
+      transition('* => void', [
+        animate('2s', style({ opacity: 0, transform: 'scale(.3)' }))
+      ])
+    ])
+  ],
 })
 export class MenuEditComponent implements OnInit {
 
@@ -20,6 +28,8 @@ export class MenuEditComponent implements OnInit {
   selectedParent: any;
   // selectedViewMode;
   items: MenuItem[];
+
+  testArr = [new ModelTopMenuItem()];
 
   constructor(
     private _menuHttp: MenuHttpFakeService,
@@ -50,15 +60,10 @@ export class MenuEditComponent implements OnInit {
     this.selected.expanded = true;
   }
   editNode({ id, name, route, isShow }: { id: number, name: string, route: string, isShow: boolean }): void {
-    // const node = this._menuHttp.findNode(id, this.menuData) as Writeable<ModelTopMenuItem>;
-    if (!this.selected) {
-      throw new Error(`Node with id=${id} not found`);
-    }
     this.selected.name = name;
     this.selected.route = route;
     this.selected.isShow = isShow;
     this._cd.detectChanges();
-    // node.isShow = isShow;
   }
   deleteNode(): void {
     if (!this.selected.isNew) {
@@ -67,7 +72,13 @@ export class MenuEditComponent implements OnInit {
     this._confirmationService.confirm({
       message: this.getRemoveMessage(this.selected),
       accept: () => {
-        
+        console.log(this.selected);
+        const parent = this.selected.parent;
+        if (parent) {
+          parent.children = parent.items = parent.children.filter(n => n.id !== this.selected.id);
+        } else {
+          this.menuData = this.menuData.filter(n => n.id !== this.selected.id);
+        }
       }
     });
   }

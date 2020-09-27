@@ -8,12 +8,15 @@
             [filter]="true"
             [draggableNodes]="true" [droppableNodes]="true" draggableScope="self" droppableScope="self"
             >  
-         <ng-template let-node pTemplate="default">
-            <app-menu-item-form 
-                [allowEdit]="selected && selected.viewMode === 'view'"
-                [isSelected]="selected && selected.id === node.id" [node]="node"
-                (eventEditSubmit)="editNode($event)">
+         <ng-template let-node pTemplate="default" >
+             <div @nodeAnimation>
+                <app-menu-item-form 
+                 [allowEdit]="selected && selected.viewMode === 'view'"
+                 [isSelected]="selected && selected.id === node.id" [node]="node"
+                 (eventEditSubmit)="editNode($event)">
             </app-menu-item-form>
+             </div>
+           
 
         </ng-template>
     </p-tree>
